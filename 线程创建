@@ -1,0 +1,30 @@
+#include<stdio.h>
+#include<unistd.h>
+#include<pthread.h>
+#include<stdlib.h>
+#include<string.h>
+void pthread_fun(void* arg)
+{
+        while(1)
+        {
+                printf("this is a new pthread");
+                printf("%s\n\n",(char*)arg);
+                sleep(1);
+        }
+}
+int main()
+{
+        pthread_t t;//pthread_create会把创建的线程tid放到传入的变量中；
+        char* buf="hello world";
+        int ret=pthread_create(&t,NULL,pthread_fun,(void*)buf);
+        if(ret!=0)
+        {
+                printf("thread_create error:%s\n",strerror(ret));
+        }
+        while(1)
+        {
+                printf("this is main thread\n");
+                sleep(1);
+        }
+        return 0;
+}
